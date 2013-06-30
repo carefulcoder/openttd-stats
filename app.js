@@ -50,7 +50,7 @@ if (os == 'Windows') {
 var interval = setInterval(function() {
     var toWrite = ottd.periodically()+'\r\n';
     openttd.stdin.write(toWrite);
-}, 5000);
+}, 1000 * 60 * 2);
 
 openttd.on('close', function (code) {
     console.log('OpenTTD exited with code ' + code);
