@@ -20,7 +20,7 @@ function drawChart() {
         if (!companyData.hasOwnProperty(record.companyName)) {
             companyData[record.companyName] = [axes];
         }
-        var income = companyData[record.companyName].length > 1 ? window.data[i].companyMoney - companyData[record.companyName][companyData[record.companyName].length -1][2] : 0;
+        var income = companyData[record.companyName].length > 1 ? window.data[i].companyMoney - companyData[record.companyName][companyData[record.companyName].length -1][1] : 0;
         companyData[record.companyName].push([window.data[i].timestep, window.data[i].companyMoney, income]);
     }
 
