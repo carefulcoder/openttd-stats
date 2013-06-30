@@ -48,9 +48,9 @@ if (os == 'Windows') {
 
 //poll our controller
 var interval = setInterval(function() {
-    var toWrite = ottd.periodically()+'\r\n';
+    var toWrite = ottd.periodically()+lineEndings;
     openttd.stdin.write(toWrite);
-}, 1000);
+}, 5000);
 
 openttd.on('close', function (code) {
     console.log('OpenTTD exited with code ' + code);
@@ -66,7 +66,6 @@ var buffer = function(stream, data) {
     if (data.indexOf(lineEndings) == -1) {
         _buf[stream] += data;
     } else {
-        console.log(stream, data); //useful to see whats going on
         var line = _buf[stream] + data.replace(/(\r\n|\n|\r)/gm,"");
         ottd[stream](line);
         _buf[stream] = '';
