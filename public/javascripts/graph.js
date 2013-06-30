@@ -10,7 +10,8 @@ function drawChart() {
     //chart options
     var options = {
         width: 1280,
-        height: 800
+        height: 800,
+        smoothLine: true
     };
 
     //build up data for each different company
