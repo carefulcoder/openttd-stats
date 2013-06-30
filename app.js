@@ -48,7 +48,7 @@ if (os == 'Windows') {
 
 //poll our controller
 var interval = setInterval(function() {
-    var toWrite = ottd.periodically()+lineEndings;
+    var toWrite = ottd.periodically()+'\r\n';
     openttd.stdin.write(toWrite);
 }, 5000);
 
