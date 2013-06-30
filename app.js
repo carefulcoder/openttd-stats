@@ -42,11 +42,16 @@ if (os == 'Windows') {
 }
 
 //poll our controller
-setInterval(function() {
+var interval = setInterval(function() {
     var toWrite = ottd.periodically()+'\r\n';
     openttd.stdin.write(toWrite);
 }, 1000);
 
+openttd.on('close', function (code) {
+    console.log('OpenTTD exited with code ' + code);
+    clearInterval(interval);
+    process.exit(code);
+});
 
 //handle buffering stdout / stderr
 var _buf = {out: '', error: ''};
