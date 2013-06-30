@@ -2,6 +2,8 @@
  * Module dependencies.
  */
 var os = 'Linux';
+var lineEndings = '\n';
+
 var express = require('express')
     , routes = require('./routes')
     , ottd = require('./routes/openttd')
@@ -36,8 +38,11 @@ http.createServer(app).listen(app.get('port'), function() {
 var spawn = require('child_process').spawn, openttd;
 
 if (os == 'Windows') {
+    lineEndings = '\r\n';
+    console.log('Spawning Windows OpenTTD Process');
     openttd = spawn('openttd.exe', ['-D'], {cwd: 'C:\\Program Files\\OpenTTD'});
 } else {
+    console.log('Spawning Linux OpenTTD Process');
     openttd = spawn('openttd', ['-D']);
 }
 
@@ -58,9 +63,10 @@ var _buf = {out: '', error: ''};
 
 //refactor this at some point
 var buffer = function(stream, data) {
-    if (data.indexOf('\r\n') == -1) {
+    if (data.indexOf(lineEndings) == -1) {
         _buf[stream] += data;
     } else {
+        console.log(stream, data); //useful to see whats going on
         var line = _buf[stream] + data.replace(/(\r\n|\n|\r)/gm,"");
         ottd[stream](line);
         _buf[stream] = '';
