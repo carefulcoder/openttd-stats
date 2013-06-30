@@ -13,7 +13,7 @@ exports.Stat = function() {
      */
     this.save = function() {
         var timestep = this.timestep ? this.timestep : exports.Stat.timestep;
-        exports.Stat.connection.query('INSERT INTO statistics VALUES(?, ?, ?)',
+        exports.Stat.connection.query('REPLACE INTO statistics VALUES(?, ?, ?)',
                                       [timestep, this.companyName, this.companyMoney]);
     };
 
