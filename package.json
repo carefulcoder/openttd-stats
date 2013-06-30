@@ -1,0 +1,13 @@
+{
+  "name": "openttd",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "mysql": "*",
+    "express": "3.3.1",
+    "jade": "*"
+  }
+}
