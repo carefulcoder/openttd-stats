@@ -9,7 +9,7 @@ function drawChart() {
 
     //chart options
     var options = {
-        width: 12800,
+        width: 1280,
         height: 800,
         smoothLine: true
     };
