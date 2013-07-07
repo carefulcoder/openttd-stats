@@ -25,22 +25,12 @@ exports.Stat = function() {
 //"static" timestep field
 exports.Stat.timestep = 0;
 
-//set up a DB connection
-var mysql = require('mysql');
-exports.Stat.connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: ''
-});
-exports.Stat.connection.connect();
-exports.Stat.connection.query('USE openttd');
-
 /**
  * Retrieve all statistics.
  * @param {function} callback
  */
 exports.Stat.all = function(callback) {
-    exports.Stat.connection.query('SELECT * FROM statistics', function(err, rows, fields) {
+    exports.Stat.connection.query('SELECT * FROM statistics', function(err, rows) {
         if (typeof rows != "undefined") {
             var ret = [];
             for(var i = 0; i < rows.length; i++) {
