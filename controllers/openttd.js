@@ -6,6 +6,14 @@
 exports.ServerController = function(models) {
 
     /**
+     * Arguments for our GET methods.
+     * @type {{getKill: Array}}
+     */
+    this.args = {
+        getKill: ['id']
+    };
+
+    /**
      * Respond to events from an OpenTTD instance.
      * @param {number} id The id of the instance.
      * @param {string} data The response.
@@ -62,22 +70,21 @@ exports.ServerController = function(models) {
      */
     this.getSpawn = function(req, res) {
         models.servers.spawnServer({name: 'Server 1'});
-        res.render('confirmation', {});
+        res.redirect(this.uri + 'servers');
     };
 
     /**
-     * Kill all running servers.
+     * Kill a running server.
      * @param {object} req The request.
      * @param {object} res The response.
      */
     this.getKill = function(req, res) {
         var instances = models.servers.getInstances();
-        for (var instance in instances) {
-            if (instances.hasOwnProperty(instance)) {
-                models.servers.killServer(instance);
-            }
+        if (typeof instances[req.params.id] != "undefined") {
+            models.servers.killServer(req.params.id, (function() {
+                res.redirect(this.uri + 'servers');
+            }).bind(this));
         }
-        res.render('confirmation', {});
     }
 };
 

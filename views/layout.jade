@@ -2,9 +2,14 @@ doctype 5
 html
   head
     title= title
-    link(rel='stylesheet', href='stylesheets/style.css')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    link(rel='stylesheet', href='#{settings.uri}css/bootstrap.min.css')
   body
-    block content
-    script(src='https://www.google.com/jsapi')
-    script(src='javascripts/graph.js')
-    div(id='chart_div')
+
+    .navbar: .navbar-inner
+        a.brand(href='/') OpenTTD Server Monitor
+
+    .container
+        block content
+    script(src='http://code.jquery.com/jquery.js')
+    script(src='#{settings.uri}js/bootstrap.min.js')

@@ -8,7 +8,9 @@ var express = require('express')
     , path = require('path');
 
 var app = express();
-app.set('env', 'production');
+
+//URI, available to views.
+app.set('uri', '/');
 
 // all environments
 app.set('port', process.env.PORT || 3000);

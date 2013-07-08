@@ -17,6 +17,12 @@ exports.Server = function()
     var handlers = {out: [], err: []};
 
     /**
+     * Map of server ID -> function
+     * @type {{}}
+     */
+    var killHandlers = {};
+
+    /**
      * List of server instances
      * @type {Array}
      */
@@ -105,6 +111,12 @@ exports.Server = function()
             console.log('OpenTTD instance exited with code ' + code);
             delete instances[bufferId];
             delete buffers[bufferId];
+
+            //execute callback scheduled to run on kill
+            if (typeof killHandlers[bufferId] == "function") {
+                killHandlers[bufferId]();
+                delete killHandlers[bufferId];
+            }
         });
 
         //save our instance, return ID
@@ -151,8 +163,9 @@ exports.Server = function()
      * Kill a server
      * @param id
      */
-    this.killServer = function(id) {
+    this.killServer = function(id, callback) {
         if (typeof instances[id] != 'undefined') {
+            killHandlers[id] = callback;
             instances[id].server.kill();
         }
     };
