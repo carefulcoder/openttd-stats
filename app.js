@@ -9,6 +9,11 @@ var express = require('express')
 
 var app = express();
 
+//we make a socket IO instance available
+//solely for writing server console logs.
+//structure may need to be changed for non broadcast messages
+var sktio = require('socket.io');
+
 //URI, available to views.
 app.set('uri', '/');
 
@@ -35,6 +40,7 @@ indexController.createRoutes('trains', app);
 var serverController = new ottd(modelsInstance);
 serverController.createRoutes('trains', app);
 
-http.createServer(app).listen(app.get('port'), function() {
+var server = http.createServer(app).listen(app.get('port'), function() {
     console.log('Express server listening on port ' + app.get('port'));
+    modelsInstance.io = sktio.listen(server);
 });

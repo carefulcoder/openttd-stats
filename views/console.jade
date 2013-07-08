@@ -1,0 +1,7 @@
+extends layout
+
+block content
+    .page-header: h1 Server Console
+    script(src='/socket.io/socket.io.js')
+    script(src='#{settings.uri}js/console.js')
+    pre#code

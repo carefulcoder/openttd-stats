@@ -21,7 +21,7 @@ exports.ServerController = function(models) {
     models.servers.addHandler('out', function(id, data) {
 
         //pick out valid responses to the "companies" command
-        var pattern = /Company Name: '([^']+).*?Money: ([0-9]+)/;
+        var pattern = /Company Name: '([^']+).*?Money: (-?[0-9]+)/;
         var patternResults = (pattern.exec(data));
 
         //save to a DB if valid. This is array check is the ugliest bit of JS I've ever seen.
@@ -39,6 +39,15 @@ exports.ServerController = function(models) {
      */
     models.servers.addHandler('err', function(id, data) {
         console.log('SERVER ' + id + ', STDERR SAYS ' + data);
+        models.io.sockets.emit('err', { server: id, data: data});
+    });
+
+    /**
+     * Callback to execute on stdout.
+     */
+    models.servers.addHandler('out', function(id, data) {
+        console.log('SERVER ' + id + ', STDOUT SAYS ' + data);
+        models.io.sockets.emit('out', { server: id, data: data});
     });
 
     /**
@@ -70,7 +79,7 @@ exports.ServerController = function(models) {
      */
     this.getSpawn = function(req, res) {
         models.servers.spawnServer({name: 'Server 1'});
-        res.redirect(this.uri + 'servers');
+        res.redirect(this.uri + 'console');
     };
 
     /**
@@ -85,6 +94,15 @@ exports.ServerController = function(models) {
                 res.redirect(this.uri + 'servers');
             }).bind(this));
         }
+    };
+
+    /**
+     * View console output of a server.
+     * @param {object} req The request.
+     * @param {object} res The response.
+     */
+    this.getConsole = function(req, res) {
+        res.render('console', {});
     }
 };
 
