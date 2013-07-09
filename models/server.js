@@ -59,18 +59,26 @@ exports.Server = function()
             buffers[id][stream] += data;
         } else {
 
-            //get the complete line that we've buffered.
-            var line = buffers[id][stream] + data.replace(/(\r\n|\n|\r)/gm,"");
+            //get any complete lines or fragments we've buffered
+            var parts = data.split(/(\r\n|\n|\r)/);
+            parts[0] = buffers[id][stream] + parts[0];
 
-            //execute handler function for output
-            for (var handler in handlers[stream]) {
-                if (handlers[stream].hasOwnProperty(handler)) {
-                    handlers[stream][handler](id, line);
+            for (var i = 0; i < parts.length - 1; i++) {
+
+                var withoutNewlines = parts[i].replace(/(\r\n|\n|\r)/, "");
+                if (withoutNewlines.length > 0) {
+
+                    //execute handler function for output
+                    for (var handler in handlers[stream]) {
+                        if (handlers[stream].hasOwnProperty(handler)) {
+                            handlers[stream][handler](id, withoutNewlines);
+                        }
+                    }
                 }
             }
 
             //reset buffer contents
-            buffers[id][stream] = '';
+            buffers[id][stream] = parts[parts.length - 1];
         }
     };
 
@@ -161,7 +169,8 @@ exports.Server = function()
 
     /**
      * Kill a server
-     * @param id
+     * @param {number} id The server ID
+     * @param {function} callback The callback to run
      */
     this.killServer = function(id, callback) {
         if (typeof instances[id] != 'undefined') {
@@ -172,7 +181,7 @@ exports.Server = function()
 
     /**
      * Set our OS
-     * @param arg
+     * @param {string} arg Either 'Windows' or anything else for linux like settings.
      */
     this.setOS = function(arg) {
         os = arg;
