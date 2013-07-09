@@ -38,16 +38,17 @@ exports.ServerController = function(models) {
      * Callback to execute on stderr, which OTTD uses more than you'd think.
      */
     models.servers.addHandler('err', function(id, data) {
-        console.log('SERVER ' + id + ', STDERR SAYS ' + data);
-        models.io.sockets.emit('err', { server: id, data: data});
+        var instance =  models.servers.getInstance(id);
+        models.io.sockets.emit('err', { id: id, name: instance.name, data: data});
     });
 
     /**
      * Callback to execute on stdout.
+     * todo DRY etc.
      */
     models.servers.addHandler('out', function(id, data) {
-        console.log('SERVER ' + id + ', STDOUT SAYS ' + data);
-        models.io.sockets.emit('out', { server: id, data: data});
+        var instance =  models.servers.getInstance(id);
+        models.io.sockets.emit('out', { id: id, name: instance.name, data: data});
     });
 
     /**

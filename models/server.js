@@ -156,8 +156,7 @@ exports.Server = function()
      * Get all running server instance properties.
      * @return {object} non sequential IDs
      */
-    this.getInstances = function()
-    {
+    this.getInstances = function() {
         var ret = {};
         for (var i = 0; i < instances.length; i++) {
             if (typeof instances[i] != 'undefined') {
@@ -165,6 +164,18 @@ exports.Server = function()
             }
         }
         return ret;
+    };
+
+    /**
+     * Get the properties of a single server instance.
+     * @param {number} id the ID of the instance to get
+     * @return {object} The properties set on instantiation
+     */
+    this.getInstance = function(id) {
+        if (typeof instances[id] != 'undefined') {
+            return instances[id].properties;
+        }
+        return {};
     };
 
     /**

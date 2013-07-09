@@ -13,4 +13,7 @@ html
     .container
         block content
     script(src='http://code.jquery.com/jquery.js')
-    script(src='#{settings.uri}js/bootstrap.min.js')
+    script(src='#{settings.uri}js/lib/bootstrap.min.js')
+    script(data-main='#{settings.uri}js/client.js', src='#{settings.uri}js/lib/require.js')
+    script.
+        var action = '#{settings.action}';

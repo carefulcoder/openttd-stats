@@ -4,11 +4,11 @@
 var express = require('express')
     , Site = require('./controllers/site').Site
     , ottd = require('./controllers/openttd').ServerController
+    , injector = require('./middleware/injector').injector
     , http = require('http')
     , path = require('path');
 
 var app = express();
-
 //we make a socket IO instance available
 //solely for writing server console logs.
 //structure may need to be changed for non broadcast messages
@@ -22,6 +22,7 @@ app.set('port', process.env.PORT || 3000);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
 app.use(express.favicon());
+app.use(injector(app));
 app.use(express.logger('dev'));
 app.use(express.bodyParser());
 app.use(express.methodOverride());
