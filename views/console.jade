@@ -4,5 +4,10 @@ block content
     .page-header: h1 Server Console
     script(src='/socket.io/socket.io.js')
     script(src='#{settings.uri}js/console.js')
+
+    ul.nav.nav-tabs
+        li.active: a(href='#') Link
+        li: a(href='#') Link
+        li: a(href='#') Link
     pre#code.console
     a.btn(href="#{settings.uri}trains/servers") Back to Server List
