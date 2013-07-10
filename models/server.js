@@ -191,6 +191,14 @@ exports.Server = function()
     };
 
     /**
+     * Count the number of active instances
+     * @returns {Number}
+     */
+    this.countInstances = function() {
+        return instances.length;
+    };
+
+    /**
      * Set our OS
      * @param {string} arg Either 'Windows' or anything else for linux like settings.
      */

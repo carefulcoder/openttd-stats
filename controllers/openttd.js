@@ -79,8 +79,8 @@ exports.ServerController = function(models) {
      * @param {object} res The response.
      */
     this.getSpawn = function(req, res) {
-        models.servers.spawnServer({name: 'Server 1'});
-        res.redirect(this.uri + 'console');
+        var server = models.servers.spawnServer({name: 'Server '+models.servers.countInstances()});
+        res.redirect(this.uri + 'console#'+server);
     };
 
     /**
@@ -103,7 +103,17 @@ exports.ServerController = function(models) {
      * @param {object} res The response.
      */
     this.getConsole = function(req, res) {
-        res.render('console', {});
+
+        var data = {servers: {}};
+        var instances = models.servers.getInstances();
+
+        for (var instance in instances) {
+            if (instances.hasOwnProperty(instance)) {
+                data.servers[instance] = instances[instance].name;
+            }
+        }
+
+        res.render('console', data);
     }
 };
 

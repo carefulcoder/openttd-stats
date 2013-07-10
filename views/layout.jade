@@ -6,14 +6,13 @@ html
     link(rel='stylesheet', href='#{settings.uri}css/bootstrap.min.css')
     link(rel='stylesheet', href='#{settings.uri}css/style.css')
   body
-
+    script(src='http://code.jquery.com/jquery.js')
     .navbar: .navbar-inner
         a.brand(href='/') OpenTTD Server Monitor
 
     .container
         block content
-    script(src='http://code.jquery.com/jquery.js')
+
     script(src='#{settings.uri}js/lib/bootstrap.min.js')
-    script(data-main='#{settings.uri}js/client.js', src='#{settings.uri}js/lib/require.js')
     script.
         var action = '#{settings.action}';
