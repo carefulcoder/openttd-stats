@@ -24,7 +24,11 @@
             line.appendChild(document.createTextNode(data.data + "\n"));
             line.className = stream;
 
-            document.getElementById('console'+data.id).appendChild(line);
+            var c = document.getElementById('console'+data.id);
+            c.appendChild(line);
+
+            c.scrollTop = c.scrollHeight;
+
         };
 
         socket.on('err', function (data) {
