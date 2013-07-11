@@ -10,7 +10,8 @@ exports.ServerController = function(models) {
      * @type {{getKill: Array}}
      */
     this.args = {
-        getKill: ['id']
+        getKill: ['id'],
+        getConsole: ['tab']
     };
 
     /**
@@ -80,7 +81,7 @@ exports.ServerController = function(models) {
      */
     this.getSpawn = function(req, res) {
         var server = models.servers.spawnServer({name: 'Server '+models.servers.countInstances()});
-        res.redirect(this.uri + 'console#'+server);
+        res.redirect(this.uri + 'console/'+server);
     };
 
     /**
@@ -104,7 +105,9 @@ exports.ServerController = function(models) {
      */
     this.getConsole = function(req, res) {
 
-        var data = {servers: {}};
+        var tab = (typeof req.params.tab == 'undefined') ? null : req.params.tab;
+        console.log(tab);
+        var data = {servers: {}, tab: tab};
         var instances = models.servers.getInstances();
 
         for (var instance in instances) {

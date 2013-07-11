@@ -7,9 +7,16 @@ block content
 
     ul.nav.nav-tabs#tabs
         each name, id in servers
-            li: a(href='#console#{id}', data-toggle="tab") #{name}
+            if id === tab
+                li.active: a(href='#console#{id}', data-toggle="tab") #{name}
+            else
+                li: a(href='#console#{id}', data-toggle="tab") #{name}
 
     div.tab-content
         each name, id in servers
-            pre(id="console#{id}").console.tab-pane
+            if id === tab
+                pre(id="console#{id}").console.tab-pane.active
+            else
+                pre(id="console#{id}").console.tab-pane
+
     a.btn(href="#{settings.uri}trains/servers") Back to Server List

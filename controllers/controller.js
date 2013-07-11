@@ -38,7 +38,7 @@ exports.Controller = function() {
                     var argumentString = '';
                     if (typeof this.args[route] != 'undefined' && this.args[route].length > 0) {
                         for (var i = 0; i < this.args[route].length; i++) {
-                            argumentString += '/:' + this.args[route][i];
+                            argumentString += '/:' + this.args[route][i]+'?';
                         }
                     }
 
