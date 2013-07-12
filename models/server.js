@@ -191,6 +191,16 @@ exports.Server = function()
     };
 
     /**
+     * Restart a server
+     * @param {number} id The server ID
+     */
+    this.restartServer = function(id) {
+        if (typeof instances[id] != 'undefined') {
+            instances[id].server.stdin.write('restart' + getLineEndings());
+        }
+    };
+
+    /**
      * Count the number of active instances
      * @returns {Number}
      */

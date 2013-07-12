@@ -11,6 +11,7 @@ exports.ServerController = function(models) {
      */
     this.args = {
         getKill: ['id'],
+        getRestart: ['id'],
         getConsole: ['tab']
     };
 
@@ -95,6 +96,19 @@ exports.ServerController = function(models) {
             models.servers.killServer(req.params.id, (function() {
                 res.redirect(this.uri + 'servers');
             }).bind(this));
+        }
+    };
+
+    /**
+     * Kill a running server.
+     * @param {object} req The request.
+     * @param {object} res The response.
+     */
+    this.getRestart = function(req, res) {
+        var instances = models.servers.getInstances();
+        if (typeof instances[req.params.id] != "undefined") {
+            models.servers.restartServer(req.params.id);
+            res.redirect(this.uri + 'console/'+req.params.id);
         }
     };
 
