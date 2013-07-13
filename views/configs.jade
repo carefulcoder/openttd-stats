@@ -1,0 +1,18 @@
+extends layout
+
+block content
+    .page-header: h1 Configuration Files
+    table.table.table-bordered
+        thead: tr
+            th Config File Name
+            th Server Name
+            th Map Width
+            th Map Height
+        tbody
+            each file in configs
+                tr
+                    td #{file.getName()}
+                    td #{file.getData().network.server_name}
+                    td #{Math.pow(2, parseInt(file.getData().game_creation.map_x))}
+                    td #{Math.pow(2, parseInt(file.getData().game_creation.map_y))}
+    a.btn.btn-success(href="#{settings.uri}trains/spawn") Add New Config

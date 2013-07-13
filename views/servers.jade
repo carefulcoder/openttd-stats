@@ -12,7 +12,8 @@ block content
                     td #{server.name}
                     td
                         .row-fluid
-                            a.btn.span4 View Console
-                            a.btn.btn-warning.span4(href="#{settings.uri}trains/restart/#{id}/") Restart Game
-                            a.btn.btn-danger.span4(href="#{settings.uri}trains/kill/#{id}/") Kill Server
+                            a.btn.span2(href="#{settings.uri}trains/console/#{id}/") Console
+                            a.btn.span2(href="#{settings.uri}trains/statistics/#{id}/") Stats
+                            a.btn.btn-warning.span2.offset4(href="#{settings.uri}trains/restart/#{id}/") Restart
+                            a.btn.btn-danger.span2(href="#{settings.uri}trains/kill/#{id}/") Kill
     a.btn.btn-success(href="#{settings.uri}trains/spawn") Spawn New Server

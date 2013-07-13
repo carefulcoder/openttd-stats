@@ -3,7 +3,8 @@
  */
 var express = require('express')
     , Site = require('./controllers/site').Site
-    , ottd = require('./controllers/openttd').ServerController
+    , Configs = require('./controllers/configs').Configs
+    , Server = require('./controllers/openttd').ServerController
     , injector = require('./middleware/injector').injector
     , http = require('http')
     , path = require('path');
@@ -22,10 +23,14 @@ app.set('port', process.env.PORT || 3000);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
 app.use(express.favicon());
-app.use(injector(app));
-app.use(express.logger('dev'));
+
 app.use(express.bodyParser());
 app.use(express.methodOverride());
+
+//cookie + session middleware
+app.use(express.cookieParser());
+app.use(express.session({secret: '!!!CHANGEME!!!'})); //no, really. I mean it.
+
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -38,8 +43,12 @@ var indexController = new Site(modelsInstance);
 indexController.createRoutes('trains', app);
 
 //initialise a server controller for management
-var serverController = new ottd(modelsInstance);
+var serverController = new Server(modelsInstance);
 serverController.createRoutes('trains', app);
+
+//initialise a config controller for ottd config files
+var configController = new Configs(modelsInstance);
+configController.createRoutes('config', app);
 
 var server = http.createServer(app).listen(app.get('port'), function() {
     console.log('Express server listening on port ' + app.get('port'));

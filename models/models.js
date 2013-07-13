@@ -29,4 +29,10 @@ exports.Models = function() {
      * @type {object}
      */
     this.servers = new Server();
+
+    /**
+     * Config file model
+     * @type {object}
+     */
+    this.Config = require('./config.js').Config;
 };
