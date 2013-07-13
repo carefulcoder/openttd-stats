@@ -9,7 +9,7 @@
     "mysql": "*",
     "express": "3.3.1",
     "socket.io": "0.9.16",
-    "iniparser": "1.0.5",
+    "iniparser": "git+https://github.com/tillberg/node-iniparser.git#master",
     "jade": "*"
   }
 }

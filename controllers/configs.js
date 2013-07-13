@@ -13,6 +13,12 @@ exports.Configs = function(models) {
     this.getIndex = function(req, res){
         models.Config.all(function(results) {
             res.render('configs', { configs: results});
+
+            for (var i = 0; i < results.length; i++) {
+                results[i].data.game_creation.map_x = 50000;
+                //results[i].save();
+            }
+
         });
     };
 };

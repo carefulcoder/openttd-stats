@@ -12,7 +12,7 @@ block content
             each file in configs
                 tr
                     td #{file.getName()}
-                    td #{file.getData().network.server_name}
-                    td #{Math.pow(2, parseInt(file.getData().game_creation.map_x))}
-                    td #{Math.pow(2, parseInt(file.getData().game_creation.map_y))}
+                    td #{file.data.network.server_name}
+                    td #{Math.pow(2, parseInt(file.data.game_creation.map_x))}
+                    td #{Math.pow(2, parseInt(file.data.game_creation.map_y))}
     a.btn.btn-success(href="#{settings.uri}trains/spawn") Add New Config
